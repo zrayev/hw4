@@ -1,0 +1,21 @@
+{
+    "name": "ahonymous/hw4",
+    "description": "Geekhub AdvancedPHP 2015 HW#4",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Moshta",
+            "email": "ahonymous@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Layer\\": "src/Layer/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.5.0",
+        "ext-mysqlnd": "*"
+    }
+}
