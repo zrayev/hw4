@@ -2,12 +2,12 @@
 
 1. You should fork this repository.
 
-2. Create Layer of DB for you models in HW#3 (use the traits and interfaces from this repository):
+2. Create Layer of DB for your models in HW#3 (use the traits and interfaces from this repository):
     - implement ConnectionInterface for connect to DB
     - write all methods from ManagerInterface in the abstract class Manager
     - write the config to your DB in the config folder
 
-3. Create user interface for you Layer:
+3. Create user interface for your Layer:
     - write functionality for initialize DB and create all tables for you models
     - create views to entity lists from DB in the browser
     - showing, adding, editing and removing entity data from interaction with the Layer from task 1
