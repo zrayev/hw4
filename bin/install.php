@@ -26,17 +26,20 @@ $post = new Post();
 $post
     ->setTitle('Перший пост')
     ->setBody('Текст посту 1.')
+    ->setCategory($category->getId())
 ;
 $postManager->insert($post);
 $post = new Post();
 $post
     ->setTitle('Другий пост')
     ->setBody('Текст посту 2.')
+    ->setCategory($category->getId())
 ;
 $postManager->insert($post);
 $post = new Post();
 $post
     ->setTitle('Третій пост')
     ->setBody('Текст посту 3.')
+    ->setCategory($category->getId())
 ;
 $postManager->insert($post);

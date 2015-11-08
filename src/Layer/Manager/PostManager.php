@@ -35,10 +35,11 @@ class PostManager extends Manager
         $statement = $this->connector->connect()
             ->prepare(
                 "INSERT INTO {$this->tableName}
-                (title, body) VALUES(:title, :body)"
+                (title, body) VALUES(:title, :body, :category_id)"
             );
         $statement->bindValue(':title', $post->getTitle());
         $statement->bindValue(':body', $post->getBody());
+        $statement->bindValue(':category_id', $post->getCategory());
 
         return $statement->execute();
     }
@@ -52,12 +53,13 @@ class PostManager extends Manager
         $statement = $this->connector->connect()
             ->prepare(
                 "UPDATE {$this->tableName}
-                 SET title=:title, body=:body
+                 SET title=:title, body=:body, category_id=:category_id
                  WHERE id=:id"
             );
         $statement->bindValue(':id', $post->getId());
         $statement->bindValue(':title', $post->getTitle());
         $statement->bindValue(':body', $post->getBody());
+        $statement->bindValue(':category_id', $post->getCategory());
 
         return $statement->execute();
     }

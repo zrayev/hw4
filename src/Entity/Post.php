@@ -19,14 +19,9 @@ class Post
     private $body;
 
     /**
-     * @var Category
+     * @var integer
      */
     private $category;
-
-    /**
-     * @var EntityLoader
-     */
-    private $categoryLoader;
 
     /**
      * @return string
@@ -67,30 +62,21 @@ class Post
     }
 
     /**
-     * @return Category
+     * @return integer
      */
     public function getCategory()
     {
-        if (!$this->category) {
-            $this->category = $this->categoryLoader->get();
-        }
-
         return $this->category;
     }
 
     /**
-     * @param Category $category
+     * @param integer $category
+     * @return $this
      */
     public function setCategory($category)
     {
         $this->category = $category;
-    }
 
-    /**
-     * @param EntityLoader $categoryLoader
-     */
-    public function setCategoryLoader($categoryLoader)
-    {
-        $this->categoryLoader = $categoryLoader;
+        return $this;
     }
 }
