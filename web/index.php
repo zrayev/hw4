@@ -10,4 +10,3 @@ $postManager = new PostManager($connector);
 
 $post = $postManager->find(1);
 var_dump($post);
-exit;

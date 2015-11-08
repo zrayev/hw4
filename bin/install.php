@@ -25,7 +25,7 @@ $postManager->insert($post);
 $post = new Post();
 $post
     ->setTitle('Третій пост')
-    ->setBody('Текст посту 3.')gi
+    ->setBody('Текст посту 3.')
 ;
 $postManager->insert($post);
 
