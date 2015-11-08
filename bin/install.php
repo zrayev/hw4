@@ -10,6 +10,16 @@ use Entity\Category;
 
 $connector = new ConnectorClass($config['db_name'], $config['db_user'], $config['db_password']);
 $connector ->createDataBase($config['db_name'], $config['db_user'], $config['db_password'],$config['host']);
+$categoryManager = new CategoryManager($connector);
+$categoryManager->createTable();
+$category = new Category();
+$category->setName('Категорія 1');
+$categoryManager->insert($category);
+
+$category = new Category();
+$category->setName('Категорія 2');
+$categoryManager->insert($category);
+
 $postManager = new PostManager($connector);
 $postManager->createTable();
 $post = new Post();
@@ -30,13 +40,3 @@ $post
     ->setBody('Текст посту 3.')
 ;
 $postManager->insert($post);
-
-$categoryManager = new CategoryManager($connector);
-$categoryManager->createTable();
-$category = new Category();
-$category->setName('Категорія 1');
-$categoryManager->insert($category);
-
-$category = new Category();
-$category->setName('Категорія 2');
-$categoryManager->insert($category);

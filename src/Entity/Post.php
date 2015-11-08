@@ -2,6 +2,8 @@
 
 namespace Entity;
 
+use Layer\Manager\EntityLoader;
+
 class Post
 {
     use IdentifiableEntityTrait;
@@ -15,6 +17,16 @@ class Post
      * @var string
      */
     private $body;
+
+    /**
+     * @var Category
+     */
+    private $category;
+
+    /**
+     * @var EntityLoader
+     */
+    private $categoryLoader;
 
     /**
      * @return string
@@ -54,4 +66,31 @@ class Post
         return $this;
     }
 
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        if (!$this->category) {
+            $this->category = $this->categoryLoader->get();
+        }
+
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @param EntityLoader $categoryLoader
+     */
+    public function setCategoryLoader($categoryLoader)
+    {
+        $this->categoryLoader = $categoryLoader;
+    }
 }

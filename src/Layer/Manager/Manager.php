@@ -17,7 +17,7 @@ abstract class Manager implements ManagerInterface
     /**
      * @var string
      */
-    protected $tableName;
+    public $tableName;
 
     /**
      * Manager constructor.
@@ -64,6 +64,19 @@ abstract class Manager implements ManagerInterface
         return null;
     }
 
+    /**
+     * @param array $ids
+     * @return object|null
+     */
+    public function findByIds(array $ids)
+    {
+        $statement = $this->connector->connect()
+            ->prepare("SELECT * FROM {$this->tableName} WHERE id IN(:ids)");
+        $statement->bindValue(':id', $ids);
+        $statement->execute();
+
+        return $this->createObjects($statement->fetchAll());
+    }
     /**
      * @return object
      */

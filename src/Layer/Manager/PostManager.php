@@ -3,11 +3,28 @@
 namespace Layer\Manager;
 
 
+use Entity\Category;
 use Entity\Post;
+use Layer\Connector\ConnectorClass;
 
 class PostManager extends Manager
 {
-    protected $tableName = 'Post';
+    public $tableName = 'Post';
+    /**
+     * @var categoryManager
+     */
+    private $categoryManager;
+
+    /**
+     * @param categoryManager $categoryManager
+     * @return $this
+     */
+    public function setCategoryManager($categoryManager)
+    {
+        $this->categoryManager = $categoryManager;
+
+        return $this;
+    }
 
     /**
      * @param Post $post
@@ -55,13 +72,30 @@ class PostManager extends Manager
               `id` int(11) NOT NULL AUTO_INCREMENT,
               `title` text CHARACTER SET utf8 NOT NULL,
               `body` text CHARACTER SET utf8 NOT NULL,
+              `category_id` int(11),
               PRIMARY KEY (`id`),
               UNIQUE KEY `id` (`id`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8";
         $statement->exec($sql);
     }
 
+    /**
+     * @param Category $category
+     * @return Post
+     */
+    public function findByCategory(Category $category)
+    {
+        $statement = $this->connector->connect()
+            ->prepare(
+                "SELECT* FROM {$this->tableName} LEFT JOIN {$this->categoryManager->tableName}
+                 ON {$this->tableName}.category_id={$this->categoryManager->tableName}.id
+                 WHERE {$this->categoryManager->tableName}.id = :category_id"
+            );
+        $statement->bindValue(':category_id', $category->getId());
+        $statement->execute();
 
+        return $this->createObjects($statement->fetchAll());
+    }
 
     /**
      * @param array $fields
@@ -74,9 +108,9 @@ class PostManager extends Manager
             ->setId($fields['id'])
             ->setTitle($fields['title'])
             ->setBody($fields['body'])
+            ->setCategory($fields['category_id'])
         ;
 
         return $post;
     }
-
 }

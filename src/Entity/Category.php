@@ -2,11 +2,13 @@
 
 namespace Entity;
 
-
 class Category
 {
     use IdentifiableEntityTrait;
 
+    /**
+     * @var string
+     */
     private $name;
 
     /**
