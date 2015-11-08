@@ -1,0 +1,13 @@
+<form method="POST">
+    <label>title</label>
+    <input type="text" name="post[title]">
+    <label>title</label>
+    <textarea name="post[body]"></textarea>
+    <label>categories</label>
+    <select name="post[category_id]">
+        {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="submit">
+</form>
