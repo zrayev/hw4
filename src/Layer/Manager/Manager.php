@@ -28,13 +28,13 @@ abstract class Manager implements ManagerInterface
         $this->connector = $connector;
     }
 
-    abstract protected function createObject(array $fields);
+    abstract public function createObject(array $fields);
 
     /**
      * @param array $fields
      * @return object[]
      */
-    protected function createObjects(array $fields)
+    public function createObjects(array $fields)
     {
         $objects = [];
 
@@ -87,7 +87,7 @@ abstract class Manager implements ManagerInterface
         ;
         $statement->execute();
 
-        return $this->createObject($statement->fetchAll());
+        return $this->createObjects($statement->fetchAll());
     }
 
     /**

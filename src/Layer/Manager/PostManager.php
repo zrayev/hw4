@@ -2,14 +2,16 @@
 
 namespace Layer\Manager;
 
-
 use Entity\Category;
 use Entity\Post;
-use Layer\Connector\ConnectorClass;
 
 class PostManager extends Manager
 {
+    /**
+     * @var string
+     */
     public $tableName = 'Post';
+
     /**
      * @var categoryManager
      */
@@ -35,7 +37,7 @@ class PostManager extends Manager
         $statement = $this->connector->connect()
             ->prepare(
                 "INSERT INTO {$this->tableName}
-                (title, body) VALUES(:title, :body, :category_id)"
+                (title, body, category_id) VALUES(:title, :body, :category_id)"
             );
         $statement->bindValue(':title', $post->getTitle());
         $statement->bindValue(':body', $post->getBody());
@@ -103,11 +105,11 @@ class PostManager extends Manager
      * @param array $fields
      * @return Post
      */
-    protected function createObject(array $fields)
+    public function createObject(array $fields)
     {
         $post = new Post();
         $post
-            ->setId($fields['id'])
+            ->setId(isset($fields['id']) ? $fields['id'] : '')
             ->setTitle($fields['title'])
             ->setBody($fields['body'])
             ->setCategory($fields['category_id'])

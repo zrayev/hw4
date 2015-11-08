@@ -6,7 +6,10 @@ use Entity\Category;
 
 class CategoryManager extends Manager
 {
-    protected $tableName = 'Category';
+    /**
+     * @var string
+     */
+    public $tableName = 'Category';
 
     /**
      * @param Category $post
@@ -63,7 +66,7 @@ class CategoryManager extends Manager
      * @param array $fields
      * @return Category
      */
-    protected function createObject(array $fields)
+    public function createObject(array $fields)
     {
         $post = new Category();
         $post
