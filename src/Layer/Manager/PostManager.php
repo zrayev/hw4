@@ -73,7 +73,7 @@ class PostManager extends Manager
                 "INSERT INTO post_tag
                 (post_id, tag_id) VALUES(:post, :tag)"
             );
-            $statement->bindValue(':post', $post->getTitle());
+            $statement->bindValue(':post', $post->getId());
             $statement->bindValue(':tag', $tag);
             $statement->execute();
         }
@@ -97,10 +97,6 @@ class PostManager extends Manager
         $statement->bindValue(':category_id', $post->getCategory());
         $statement->execute();
 
-        $statement = $this->connector->connect()
-            ->prepare('SELECT * FROM post_tag WHERE post_id=:post_id')
-
-        ;
         $tags = $this->getTagIds($post->getId());
 
         foreach ($post->getTags() as $tag) {

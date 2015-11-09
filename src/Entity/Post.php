@@ -28,6 +28,11 @@ class Post
      */
     private $tags;
 
+    public function __construct()
+    {
+        $this->tags = [];
+    }
+
     /**
      * @return string
      */
