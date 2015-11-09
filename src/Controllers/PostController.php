@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Entity\Post;
 use Layer\Manager\CategoryManager;
 use Layer\Manager\PostManager;
 
@@ -76,8 +77,27 @@ class PostController
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function editAction($id)
     {
+        /** @var Post $post */
+       $post = $this->postManager->find($id);
 
+        if (isset($_POST['post'])) {
+            $post
+                ->setBody($_POST['post']['body'])
+                ->setTitle($_POST['post']['title'])
+                ->setCategory($_POST['post']['category_id'])
+            ;
+            $this->postManager->update($post);
+        }
+
+        return $this->twig->render('Post/edit.html.twig', [
+            'post' => $post,
+            'categories' => $this->categoryManager->findAll(),
+        ]);
     }
 }

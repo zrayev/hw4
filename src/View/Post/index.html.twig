@@ -1,4 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
 {% for post in posts %}
-    <h3>{{ post.title }}</h3>
+    <h3><a href="/show/{{ post.id }}">{{ post.title }}</a></h3>
     {{ post.body }}
 {% endfor %}
+<a href="/create">create</a>
+{% endblock %}

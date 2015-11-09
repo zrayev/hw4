@@ -38,6 +38,12 @@ $router->any('/create', function()  use($postManager, $categoryManager, $twig) {
     return $controller->createAction();
 });
 
+$router->any('/edit/{id}', function($id)  use($postManager, $categoryManager, $twig) {
+    $controller = new PostController($postManager, $categoryManager, $twig);
+
+    return $controller->editAction($id);
+});
+
 $dispatcher = new Dispatcher($router->getData());
 $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
