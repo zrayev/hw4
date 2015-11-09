@@ -2,7 +2,9 @@
 
 namespace Controllers;
 
+use Entity\Category;
 use Entity\Post;
+use Entity\Tag;
 use Layer\Manager\CategoryManager;
 use Layer\Manager\PostManager;
 use Layer\Manager\TagManager;
@@ -49,10 +51,12 @@ class PostController
      */
     public function indexAction()
     {
-        $posts = $this->postManager->findByTag($this->tagManager->find(3));
+        $posts = $this->postManager->findAll();
 
         return $this->twig->render('Post/index.html.twig', [
             'posts' => $posts,
+            'tags' => $this->tagManager->findAll(),
+            'categories' => $this->categoryManager->findAll(),
         ]);
 
     }
@@ -108,6 +112,42 @@ class PostController
             'post' => $post,
             'categories' => $this->categoryManager->findAll(),
             'tags' => $this->tagManager->findAll(),
+        ]);
+    }
+
+    /**
+     * @param $tagId
+     * @return string
+     */
+    public function listByTagAction($tagId)
+    {
+        /** @var Tag $tag */
+        $tag = $this->tagManager->find($tagId);
+        /** @var Post[] $posts */
+        $posts = $this->postManager->findByTag($tag);
+
+        return $this->twig->render('Post/index.html.twig', [
+            'posts' => $posts,
+            'tags' => $this->tagManager->findAll(),
+            'categories' => $this->categoryManager->findAll(),
+        ]);
+    }
+
+    /**
+     * @param $categoryId
+     * @return string
+     */
+    public function listByCategoryAction($categoryId)
+    {
+        /** @var Category $category */
+        $category = $this->categoryManager->find($categoryId);
+        /** @var Post[] $posts */
+        $posts = $this->postManager->findByCategory($category);
+
+        return $this->twig->render('Post/index.html.twig', [
+            'posts' => $posts,
+            'tags' => $this->tagManager->findAll(),
+            'categories' => $this->categoryManager->findAll(),
         ]);
     }
 }

@@ -46,6 +46,18 @@ $router->any('/edit/{id}', function($id)  use($postManager, $categoryManager, $t
     return $controller->editAction($id);
 });
 
+$router->any('/category/{id}', function($id)  use($postManager, $categoryManager, $twig, $tagManager) {
+    $controller = new PostController($postManager, $categoryManager, $twig, $tagManager);
+
+    return $controller->listByCategoryAction($id);
+});
+
+$router->any('/tag/{id}', function($id)  use($postManager, $categoryManager, $twig, $tagManager) {
+    $controller = new PostController($postManager, $categoryManager, $twig, $tagManager);
+
+    return $controller->listByTagAction($id);
+});
+
 $dispatcher = new Dispatcher($router->getData());
 $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 

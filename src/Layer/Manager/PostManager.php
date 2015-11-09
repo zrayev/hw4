@@ -152,6 +152,24 @@ class PostManager extends Manager
         $statement->exec($sql);
     }
 
+    /**
+     * @return object
+     */
+    public function findAll()
+    {
+        $statement = $this->connector->connect()
+            ->prepare("SELECT * FROM {$this->tableName}")
+        ;
+        $statement->execute();
+        $posts = [];
+
+        foreach ($statement->fetchAll() as $post) {
+            $post['tag_ids'] = $this->getTagIds($post['id']);
+            $posts[] = $this->createObject($post);
+        }
+
+        return $posts;
+    }
 
     /**
      * @param Category $category
@@ -167,8 +185,14 @@ class PostManager extends Manager
             );
         $statement->bindValue(':category_id', $category->getId());
         $statement->execute();
+        $posts = [];
 
-        return $this->createObjects($statement->fetchAll());
+        foreach ($statement->fetchAll() as $post) {
+            $post['tag_ids'] = $this->getTagIds($post['id']);
+            $posts[] = $this->createObject($post);
+        }
+
+        return $posts;
     }
 
     /**
