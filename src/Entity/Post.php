@@ -24,6 +24,11 @@ class Post
     private $category;
 
     /**
+     * @var array
+     */
+    private $tags;
+
+    /**
      * @return string
      */
     public function getTitle()
@@ -76,6 +81,25 @@ class Post
     public function setCategory($category)
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param array $tags
+     * @return $this
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
 
         return $this;
     }

@@ -14,6 +14,11 @@
                 <option value="{{ category.id }}" {% if category.id == post.category %} selected {% endif %}>{{ category.name }}</option>
             {% endfor %}
         </select>
+        <select name="post[tag_ids][]" multiple>
+            {% for tag in tags %}
+                <option value="{{ tag.id }}">{{ tag.title }}</option>
+            {% endfor %}
+        </select>
         <input type="submit" value="submit">
     </form>
 {% endblock %}

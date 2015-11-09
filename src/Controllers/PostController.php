@@ -5,6 +5,7 @@ namespace Controllers;
 use Entity\Post;
 use Layer\Manager\CategoryManager;
 use Layer\Manager\PostManager;
+use Layer\Manager\TagManager;
 
 class PostController
 {
@@ -17,23 +18,30 @@ class PostController
      * @var CategoryManager
      */
     private $categoryManager;
+
     /**
      * @var \Twig_Environment
      */
     private $twig;
 
     /**
+     * @var TagManager
+     */
+    private $tagManager;
+
+    /**
      * PostController constructor.
      * @param PostManager $postManager
      * @param CategoryManager $categoryManager
      * @param \Twig_Environment $twig
+     * @param TagManager $tagManager
      */
-    public function __construct(PostManager $postManager, CategoryManager $categoryManager, \Twig_Environment $twig)
+    public function __construct(PostManager $postManager, CategoryManager $categoryManager, \Twig_Environment $twig, TagManager $tagManager)
     {
-
         $this->postManager = $postManager;
         $this->categoryManager = $categoryManager;
         $this->twig = $twig;
+        $this->tagManager = $tagManager;
     }
 
     /**
@@ -41,7 +49,7 @@ class PostController
      */
     public function indexAction()
     {
-        $posts = $this->postManager->findAll();
+        $posts = $this->postManager->findByTag($this->tagManager->find(3));
 
         return $this->twig->render('Post/index.html.twig', [
             'posts' => $posts,
@@ -91,6 +99,7 @@ class PostController
                 ->setBody($_POST['post']['body'])
                 ->setTitle($_POST['post']['title'])
                 ->setCategory($_POST['post']['category_id'])
+                ->setTags($_POST['post']['tag_ids'])
             ;
             $this->postManager->update($post);
         }
@@ -98,6 +107,7 @@ class PostController
         return $this->twig->render('Post/edit.html.twig', [
             'post' => $post,
             'categories' => $this->categoryManager->findAll(),
+            'tags' => $this->tagManager->findAll(),
         ]);
     }
 }

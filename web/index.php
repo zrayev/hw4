@@ -5,6 +5,7 @@ require_once __DIR__ . '/../config/autoload.php';
 use Layer\Connector\ConnectorClass;
 use Layer\Manager\CategoryManager;
 use Layer\Manager\PostManager;
+use Layer\Manager\TagManager;
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
 use Controllers\PostController;
@@ -13,6 +14,7 @@ $connector = new ConnectorClass($config['db_name'], $config['db_user'], $config[
 $categoryManager = new CategoryManager($connector);
 $postManager = new PostManager($connector);
 $postManager->setCategoryManager($categoryManager);
+$tagManager = new TagManager($connector);
 
 $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../src/View');
 $twig = new \Twig_Environment($loader, [
@@ -20,26 +22,26 @@ $twig = new \Twig_Environment($loader, [
 ]);
 
 $router = new RouteCollector();
-$router->any('/', function() use($postManager, $categoryManager, $twig) {
-    $controller = new PostController($postManager, $categoryManager,$twig);
+$router->any('/', function() use($postManager, $categoryManager, $twig, $tagManager) {
+    $controller = new PostController($postManager, $categoryManager,$twig,$tagManager);
 
     return $controller->indexAction();
 });
 
-$router->any('/show/{id}', function($id)  use($postManager, $categoryManager, $twig) {
-    $controller = new PostController($postManager, $categoryManager, $twig);
+$router->any('/show/{id}', function($id)  use($postManager, $categoryManager, $twig, $tagManager) {
+    $controller = new PostController($postManager, $categoryManager, $twig, $tagManager);
 
     return $controller->showAction($id);
 });
 
-$router->any('/create', function()  use($postManager, $categoryManager, $twig) {
-    $controller = new PostController($postManager, $categoryManager, $twig);
+$router->any('/create', function()  use($postManager, $categoryManager, $twig, $tagManager) {
+    $controller = new PostController($postManager, $categoryManager, $twig, $tagManager);
 
     return $controller->createAction();
 });
 
-$router->any('/edit/{id}', function($id)  use($postManager, $categoryManager, $twig) {
-    $controller = new PostController($postManager, $categoryManager, $twig);
+$router->any('/edit/{id}', function($id)  use($postManager, $categoryManager, $twig, $tagManager) {
+    $controller = new PostController($postManager, $categoryManager, $twig, $tagManager);
 
     return $controller->editAction($id);
 });
