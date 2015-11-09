@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}show{% endblock %}
+
+{% block content %}
+<h1> {{ post.title }} </h1>
+{{ post.body }}
+<a href="/edit/{{ post.id }}">edit</a>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{% for tag in tags %}
+    <ul>
+        <li><a href="/tag/{{ tag.id }}">{{ tag.title }}</a> </li>
+    </ul>
+{% endfor %}
+{% for category in categories %}
+    <ul>
+        <li><a href="/category/{{ category.id }}">{{ category.name }}</a> </li>
+    </ul>
+{% endfor %}
+{% for post in posts %}
+    <h3><a href="/show/{{ post.id }}">{{ post.title }}</a></h3>
+    {{ post.body }}
+{% endfor %}
+<a href="/create">create</a>
+{% endblock %}
